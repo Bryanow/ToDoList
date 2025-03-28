@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas 📝</title>
+    <link rel="stylesheet" href="src/css/reset.css">
+    <link rel="stylesheet" href="src/css/styles.css">
+    <link rel="stylesheet" href="src/css/responsivity.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Minha Lista de Tarefas</h1>
+        </header>
+
+        <div class="input-container">
+            <input type="text" id="taskInput" placeholder="O que você precisa fazer?">
+            <button id="addTaskBtn">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 5v14m7-7H5" stroke="white" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
+        </div>
+
+        <ul id="taskList">
+            <li class="task-item">
+                <span class="task-text">Exemplo de tarefa</span>
+                <div class="task-buttons">
+                    <button class="complete-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24">
+                            <path d="M5 12l5 5L19 7" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        </svg>
+                    </button>
+                    <button class="delete-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24">
+                            <path d="M6 6l12 12M6 18L18 6" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        </svg>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <footer>
+        <p>Organize seu dia e aumente sua produtividade!</p>
+    </footer>
+</body>
+</html>

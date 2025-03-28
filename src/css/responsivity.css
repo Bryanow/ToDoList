@@ -1,0 +1,41 @@
+@media (max-width: 600px) {
+    .container {
+        max-width: 90%;
+        margin: 30px auto;
+        padding: 15px;
+    }
+
+    #taskInput {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    #addTaskBtn {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .task-text {
+        font-size: 14px;
+    }
+
+    .task-buttons button {
+        padding: 4px 8px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 400px) {
+    .input-container {
+        flex-direction: column;
+    }
+
+    #taskInput {
+        border-radius: 5px;
+        margin-bottom: 5px;
+    }
+
+    #addTaskBtn {
+        border-radius: 5px;
+    }
+}

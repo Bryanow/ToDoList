@@ -1,41 +1,72 @@
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .container {
-        max-width: 90%;
+        max-width: 95%;
         margin: 30px auto;
         padding: 15px;
     }
 
-    #taskInput {
-        font-size: 14px;
+    .tabs {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .tab-button {
+        flex: 1 1 calc(33.33% - 6px);
+        font-size: 12px;
         padding: 8px;
+        margin: 3px;
+    }
+
+    .progress-bar {
+        height: 15px;
+    }
+
+    .input-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #taskInput, #taskTime {
+        width: 100%;
+        border-radius: 5px;
+        margin-bottom: 8px;
     }
 
     #addTaskBtn {
-        font-size: 14px;
-        padding: 8px;
+        width: 100%;
+        border-radius: 5px;
+    }
+}
+
+@media (max-width: 600px) {
+    .task-item {
+        flex-direction: column;
+        text-align: center;
     }
 
-    .task-text {
-        font-size: 14px;
+    .task-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 5px;
     }
 
     .task-buttons button {
-        padding: 4px 8px;
-        font-size: 14px;
+        padding: 6px;
     }
 }
 
 @media (max-width: 400px) {
-    .input-container {
-        flex-direction: column;
+    .tab-button {
+        flex: 1 1 calc(50% - 6px);
     }
 
-    #taskInput {
-        border-radius: 5px;
-        margin-bottom: 5px;
+    .task-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
     }
 
-    #addTaskBtn {
-        border-radius: 5px;
+    .task-buttons button {
+        flex: 1 1 45%;
     }
 }

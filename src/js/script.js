@@ -3,7 +3,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const taskInput = document.getElementById("taskInput");
     const taskTime = document.getElementById("taskTime");
     const progressBar = document.getElementById("progressBar");
+    const tabButtons = document.querySelectorAll(".tab-button");
+
     let currentDay = "segunda"; // Padrão para a primeira aba ativa
+
+    // Trocar de aba e atualizar a lista de tarefas correspondente
+    tabButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            currentDay = button.getAttribute("data-day");
+            document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
+            renderTasks(); // Atualiza a lista quando troca de aba
+        });
+    });
 
     addTaskBtn.addEventListener("click", () => addTask());
 
@@ -12,23 +24,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const timeValue = taskTime.value;
         if (taskText === "") return;
 
-        const taskList = getTaskListElement();
-        const taskData = { text: taskText, time: timeValue, completed: false };
-        
         const tasks = getTasksForDay();
-        tasks.push(taskData);
+        tasks.push({ text: taskText, time: timeValue, completed: false });
         saveTasksForDay(tasks);
 
-        renderTasks(currentDay); // Passando o currentDay para renderizar corretamente
+        renderTasks();
         taskInput.value = "";
         taskTime.value = "";
     }
 
-    function renderTasks(currentDay) {
+    function renderTasks() {
         const taskList = document.querySelector(`.task-list[data-day="${currentDay}"]`);
         taskList.innerHTML = ""; // Limpa a lista antes de adicionar as novas tarefas
 
-        const tasks = getTasksForDay(currentDay);
+        const tasks = getTasksForDay();
         tasks.forEach((task, index) => {
             const li = document.createElement("li");
             li.classList.add("task-item");
@@ -53,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         addEventListenersToButtons();
-        updateProgress(currentDay);
+        updateProgress();
     }
 
     function addEventListenersToButtons() {
@@ -73,28 +82,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function toggleCompleteTask(index) {
-        const tasks = getTasksForDay(currentDay);
+        const tasks = getTasksForDay();
         tasks[index].completed = !tasks[index].completed;
         saveTasksForDay(tasks);
-        renderTasks(currentDay);
+        renderTasks();
     }
 
     function deleteTask(index) {
-        const tasks = getTasksForDay(currentDay);
+        const tasks = getTasksForDay();
         tasks.splice(index, 1);
         saveTasksForDay(tasks);
-        renderTasks(currentDay);
+        renderTasks();
     }
 
-    function updateProgress(currentDay) {
-        const tasks = getTasksForDay(currentDay);
+    function updateProgress() {
+        const tasks = getTasksForDay();
         const completedTasks = tasks.filter(task => task.completed).length;
         const progress = tasks.length === 0 ? 0 : (completedTasks / tasks.length) * 100;
         progressBar.style.width = `${progress}%`;
-    }
-
-    function getTaskListElement() {
-        return document.querySelector(`.task-list[data-day="${currentDay}"]`);
     }
 
     function getTasksForDay() {
@@ -105,5 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem(`tasks_${currentDay}`, JSON.stringify(tasks));
     }
 
-    renderTasks(currentDay);
+    // Exibir as tarefas do primeiro dia ao carregar
+    renderTasks();
 });

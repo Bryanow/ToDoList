@@ -7,15 +7,30 @@
     <link rel="stylesheet" href="src/css/reset.css">
     <link rel="stylesheet" href="src/css/styles.css">
     <link rel="stylesheet" href="src/css/responsivity.css">
+    <link rel="stylesheet" href="src/css/tabs.css">
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Minha Lista de Tarefas</h1>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
         </header>
+
+        <div class="tabs">
+            <button class="tab-button active" data-day="segunda">Segunda</button>
+            <button class="tab-button" data-day="terca">Terça</button>
+            <button class="tab-button" data-day="quarta">Quarta</button>
+            <button class="tab-button" data-day="quinta">Quinta</button>
+            <button class="tab-button" data-day="sexta">Sexta</button>
+            <button class="tab-button" data-day="sabado">Sábado</button>
+            <button class="tab-button" data-day="domingo">Domingo</button>
+        </div>
 
         <div class="input-container">
             <input type="text" id="taskInput" placeholder="O que você precisa fazer?">
+            <input type="time" id="taskTime">
             <button id="addTaskBtn">
                 <svg width="24" height="24" viewBox="0 0 24 24">
                     <path d="M12 5v14m7-7H5" stroke="white" stroke-width="2" stroke-linecap="round" />
@@ -23,27 +38,22 @@
             </button>
         </div>
 
-        <ul id="taskList">
-            <li class="task-item">
-                <span class="task-text">Exemplo de tarefa</span>
-                <div class="task-buttons">
-                    <button class="complete-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24">
-                            <path d="M5 12l5 5L19 7" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
-                        </svg>
-                    </button>
-                    <button class="delete-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24">
-                            <path d="M6 6l12 12M6 18L18 6" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
-                        </svg>
-                    </button>
-                </div>
-            </li>
-        </ul>
+        <div class="tasks-container">
+            <ul class="task-list active" data-day="segunda"></ul>
+            <ul class="task-list" data-day="terca"></ul>
+            <ul class="task-list" data-day="quarta"></ul>
+            <ul class="task-list" data-day="quinta"></ul>
+            <ul class="task-list" data-day="sexta"></ul>
+            <ul class="task-list" data-day="sabado"></ul>
+            <ul class="task-list" data-day="domingo"></ul>
+        </div>
     </div>
 
     <footer>
         <p>Organize seu dia e aumente sua produtividade!</p>
     </footer>
+
+    <script src="src/js/script.js"></script>
+    <script src="src/js/tabs.js"></script>
 </body>
 </html>

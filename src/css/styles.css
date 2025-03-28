@@ -1,3 +1,5 @@
+
+
 /* Corpo da página */
 body {
     background: linear-gradient(120deg, #007bff, #7fa0e4);
@@ -30,20 +32,65 @@ header h1 {
     color: #0026ff;
 }
 .progress-container {
+    transition: 0.3s;
     width: 100%;
-    background-color: #f3f3f3;
-    border-radius: 5px;
-    overflow: hidden;
-}
-.progress-bar {
     height: 20px;
-    background-color: #4caf50;
+    background-color: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
     width: 0%;
-    transition: width 0.3s;
+    background: repeating-linear-gradient(
+        -45deg, 
+        #4caf50, #4caf50 10px, 
+        #6dc76d 10px, #6dc76d 20px
+    );
+    background-size: 40px 40px;
+    animation: stripes-animation 1s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    text-shadow: 1px 1px 2px black;
+}
+
+@keyframes stripes-animation {
+    from { background-position: 0 0; }
+    to { background-position: 40px 0; }
+}
+
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+}
+
+/* Animação especial ao atingir 100% */
+@keyframes fireworks {
+    0% { background: radial-gradient(circle, #2b429e, #0033ff, #2b429e, #0033ff, transparent); }
+    50% { background: radial-gradient(circle, #0033ff, #2b429e, #0033ff, #2b429e, transparent); }
+    100% { background: radial-gradient(circle, #2b429e, #0033ff, #2b429e, #0033ff, transparent); }
+}
+
+.full-progress {
+    animation: fireworks 1s infinite alternate;
 }
 
 /* Estilização das abas */
 .tabs {
+    margin-top: 10px;
     display: flex;
     justify-content: space-between;
     background: #c2c2c2;

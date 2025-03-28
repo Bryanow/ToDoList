@@ -99,7 +99,30 @@ document.addEventListener("DOMContentLoaded", () => {
         const tasks = getTasksForDay();
         const completedTasks = tasks.filter(task => task.completed).length;
         const progress = tasks.length === 0 ? 0 : (completedTasks / tasks.length) * 100;
+        
         progressBar.style.width = `${progress}%`;
+    
+        // Adiciona o valor numérico dentro da barra
+        let progressText = document.querySelector(".progress-text");
+        if (!progressText) {
+            progressText = document.createElement("div");
+            progressText.classList.add("progress-text");
+            progressBar.appendChild(progressText);
+        }
+        progressText.innerHTML = `${Math.round(progress)}% ${getProgressEmoji(progress)}`;
+    
+        // Se progresso for 100%, ativa a animação especial
+        if (progress === 100) {
+            progressBar.classList.add("full-progress");
+        } else {
+            progressBar.classList.remove("full-progress");
+        }
+    }
+    
+    // Função que retorna um emoji baseado no progresso
+    function getProgressEmoji(progress) {
+        const emojiLevels = ["😴", "😐", "🙂", "😃", "😁", "🤩", "🔥", "🚀", "🏆", "🎉", "🎯"];
+        return emojiLevels[Math.floor(progress / 10)];
     }
 
     function getTasksForDay() {

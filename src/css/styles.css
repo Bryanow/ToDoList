@@ -1,6 +1,6 @@
 
 
-/* Corpo da página */
+/* body page */
 body {
     background: linear-gradient(120deg, #007bff, #7fa0e4);
     color: #fff;
@@ -8,10 +8,10 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
-    overflow-x: hidden; /* Permite rolagem lateral sem cortar */
+    overflow-x: hidden;
 }
 
-/* Container principal */
+/* Main conatiner */
 .container {
     max-width: 500px;
     margin: 50px auto;
@@ -26,11 +26,11 @@ body {
     min-height: 70vh;
 }
 
-/* Cabeçalho */
 header h1 {
     font-size: 24px;
     color: #0026ff;
 }
+
 .progress-container {
     transition: 0.3s;
     width: 100%;
@@ -76,7 +76,7 @@ header h1 {
     text-shadow: 1px 1px 2px black;
 }
 
-/* Animação especial ao atingir 100% */
+/* Special animation on reaching 100% */
 @keyframes celebration {
     0% { transform: scale(1)}
     100% { transform: scale(1.1)}
@@ -86,7 +86,7 @@ header h1 {
     animation: celebration 1s infinite alternate;
 }
 
-/* Estilização das abas */
+/* Tabs cofiguration */
 .tabs {
     margin-top: 10px;
     display: flex;
@@ -121,7 +121,7 @@ header h1 {
     background: #4caf50;
 }
 
-/* Campo de entrada */
+/* Input tasks container */
 .input-container {
     display: flex;
     justify-content: space-between;
@@ -136,7 +136,7 @@ header h1 {
     font-size: 16px;
 }
 
-/* Botão de adicionar */
+/* Button to add tasks */
 #addTaskBtn {
     background: #0026ff;
     border: none;
@@ -150,7 +150,7 @@ header h1 {
     background: #001796;
 }
 
-/* Lista de tarefas */
+/*To-do list */
 .tasks-container {
     flex-grow: 1;
     overflow-y: auto;
@@ -184,13 +184,12 @@ header h1 {
     font-size: 16px;
 }
 
-/* Centralizar botões de ação */
+/* General configuration to taks buttons */
 .task-buttons {
     display: flex;
     gap: 5px;
 }
 
-/* Botão concluir */
 .complete-btn {
     background: #28a745;
     border: none;
@@ -216,7 +215,6 @@ header h1 {
     justify-content: center;
 }
 
-/* Botão excluir */
 .delete-btn {
     background: #dc3545;
     border: none;
@@ -229,7 +227,6 @@ header h1 {
     background: #a71d2a;
 }
 
-/* Rodapé */
 footer {
     font-size: 14px;
     width: 100%;

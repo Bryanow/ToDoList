@@ -5,15 +5,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const progressBar = document.getElementById("progressBar");
     const tabButtons = document.querySelectorAll(".tab-button");
 
-    let currentDay = "segunda"; // Default to the first active tabs
+    let currentDay = "segunda"; // Default para o primeiro dia ativo
 
-    // Alternate tabs and update to respective list
+    // Alternar abas e atualizar a lista correspondente
     tabButtons.forEach(button => {
         button.addEventListener("click", () => {
             currentDay = button.getAttribute("data-day");
             document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
             button.classList.add("active");
-            renderTasks(); // Update list when alternate between tabs
+            renderTasks(); // Atualiza a lista ao alternar entre as abas
         });
     });
 
@@ -32,7 +32,14 @@ document.addEventListener("DOMContentLoaded", () => {
         taskInput.value = "";
         taskTime.value = "";
     }
+
     taskInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            addTask();
+        }
+    });
+
+    taskTime.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
             addTask();
         }
@@ -49,8 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (task.completed) li.classList.add("completed");
 
             li.innerHTML = `
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=select_check_box" />
-                <span class="task-text">${task.time ? `[${task.time}] ` : ""}${task.text}</span>
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=select_check_box" />
+                <input type="time" class="task-time-input" value="${task.time || ''}" data-index="${index}" />
+                <input type="text" class="task-text-input" value="${task.text}" data-index="${index}" />
                 <div class="task-buttons">
                     <button class="complete-btn" data-index="${index}" style="background: ${task.completed ? 'gray' : 'green'};">
                         ${task.completed 
@@ -83,6 +91,46 @@ document.addEventListener("DOMContentLoaded", () => {
                 deleteTask(index);
             });
         });
+
+        // Evento para editar o horário da tarefa
+        document.querySelectorAll(".task-time-input").forEach(input => {
+            input.addEventListener("change", (e) => {
+                const index = e.target.getAttribute("data-index");
+                updateTask(index, "time", e.target.value, true); // Reorganizar ao editar o horário
+            });
+
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    e.target.blur(); // Simula perda de foco para salvar
+                }
+            });
+        });
+
+        // Evento para editar o nome da tarefa
+        document.querySelectorAll(".task-text-input").forEach(input => {
+            input.addEventListener("blur", (e) => {
+                const index = e.target.getAttribute("data-index");
+                updateTask(index, "text", e.target.value);
+            });
+
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    e.target.blur(); // Simula perda de foco para salvar
+                }
+            });
+        });
+    }
+
+    function updateTask(index, field, value, reorder = false) {
+        const tasks = getTasksForDay();
+        tasks[index][field] = value;
+        saveTasksForDay(tasks);
+
+        if (reorder) {
+            renderTasks(); // Reorganiza a lista caso o horário seja alterado
+        } else {
+            renderTasks();
+        }
     }
 
     function toggleCompleteTask(index) {
@@ -103,9 +151,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const tasks = getTasksForDay();
         const completedTasks = tasks.filter(task => task.completed).length;
         const progress = tasks.length === 0 ? 0 : (completedTasks / tasks.length) * 100;
-        
+
         progressBar.style.width = `${progress}%`;
-    
+
         let progressText = document.querySelector(".progress-text");
         if (!progressText) {
             progressText = document.createElement("div");
@@ -113,29 +161,27 @@ document.addEventListener("DOMContentLoaded", () => {
             progressBar.appendChild(progressText);
         }
         progressText.innerHTML = `${Math.round(progress)}% ${getProgressEmoji(progress)}`;
-    
-        // Activate special animation when reach 100%
+
         if (progress === 100) {
             progressBar.classList.add("full-progress");
         } else {
             progressBar.classList.remove("full-progress");
         }
     }
-    
-    // Fucntion that returns a reaction to different progress states
+
     function getProgressEmoji(progress) {
         const emojiLevels = ["😴", "😐", "🙂", "😃", "😁", "🤩", "🔥", "🚀", "🏆", "🎉", "🎯"];
         return emojiLevels[Math.floor(progress / 10)];
     }
 
     function getTasksForDay() {
-        return JSON.parse(localStorage.getItem(`tasks_${currentDay}`)) || [];
+        const tasks = JSON.parse(localStorage.getItem(`tasks_${currentDay}`)) || [];
+        return tasks.sort((a, b) => (a.time || "23:59").localeCompare(b.time || "23:59"));
     }
 
     function saveTasksForDay(tasks) {
         localStorage.setItem(`tasks_${currentDay}`, JSON.stringify(tasks));
     }
 
-    // Show tasks from the first day on load
     renderTasks();
 });

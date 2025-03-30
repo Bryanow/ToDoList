@@ -237,5 +237,6 @@ footer {
     padding: 10px;
     background: rgba(0, 0, 0, 0.6);
     color: white;
-    position: relative;
+    position: fixed;
+    bottom: 0;
 }

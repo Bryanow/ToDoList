@@ -32,6 +32,11 @@ document.addEventListener("DOMContentLoaded", () => {
         taskInput.value = "";
         taskTime.value = "";
     }
+    taskInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            addTask();
+        }
+    });
 
     function renderTasks() {
         const taskList = document.querySelector(`.task-list[data-day="${currentDay}"]`);

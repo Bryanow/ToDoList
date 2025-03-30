@@ -45,18 +45,24 @@
         align-items: center;
         justify-content: space-between;
         text-align: center;
+        font-size: 14px;
     }
 
     .task-time-input {
         order: 1;
         text-align: center;
         width: 80px;
+        font-size: 14px;
     }
 
     .task-text-input {
         order: 2;
         text-align: center;
         flex-grow: 1;
+        font-size: 14px;
+        overflow-x: auto;
+        white-space: nowrap;
+        max-width: 150px;
     }
 
     .task-buttons {
@@ -79,6 +85,16 @@
         flex-wrap: wrap;
         justify-content: center;
         text-align: center;
+        font-size: 12px;
+    }
+
+    .task-time-input {
+        font-size: 12px;
+    }
+
+    .task-text-input {
+        font-size: 12px;
+        max-width: 120px;
     }
 
     .task-buttons {

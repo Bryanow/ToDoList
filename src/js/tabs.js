@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tabButtons = document.querySelectorAll(".tab-button");
-    let currentDay = "segunda"; // Define a aba padrão
+    let currentDay = "segunda"; // Set default tab
 
     tabButtons.forEach(button => {
         button.addEventListener("click", () => {
@@ -8,15 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
             button.classList.add("active");
 
             currentDay = button.dataset.day;
-            // Aqui mantemos a lógica de exibir a lista da aba ativa
+            // Setting the mthod to keep the list of the active tab
             document.querySelectorAll(".task-list").forEach(list => list.classList.remove("active"));
             document.querySelector(`.task-list[data-day="${currentDay}"]`).classList.add("active");
 
-            // Chama renderTasks para o dia correto
+            // Call renderTasks to the correct day
             renderTasks(currentDay);
         });
     });
 
-    // Ativar a primeira aba por padrão
+    // Active first tab by default
     document.querySelector(".tab-button.active")?.click();
 });

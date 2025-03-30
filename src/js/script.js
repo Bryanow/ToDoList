@@ -5,15 +5,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const progressBar = document.getElementById("progressBar");
     const tabButtons = document.querySelectorAll(".tab-button");
 
-    let currentDay = "segunda"; // Padrão para a primeira aba ativa
+    let currentDay = "segunda"; // Default to the first active tabs
 
-    // Trocar de aba e atualizar a lista de tarefas correspondente
+    // Alternate tabs and update to respective list
     tabButtons.forEach(button => {
         button.addEventListener("click", () => {
             currentDay = button.getAttribute("data-day");
             document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
             button.classList.add("active");
-            renderTasks(); // Atualiza a lista quando troca de aba
+            renderTasks(); // Update list when alternate between tabs
         });
     });
 
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderTasks() {
         const taskList = document.querySelector(`.task-list[data-day="${currentDay}"]`);
-        taskList.innerHTML = ""; // Limpa a lista antes de adicionar as novas tarefas
+        taskList.innerHTML = "";
 
         const tasks = getTasksForDay();
         tasks.forEach((task, index) => {
@@ -106,7 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
         
         progressBar.style.width = `${progress}%`;
     
-        // Adiciona o valor numérico dentro da barra
         let progressText = document.querySelector(".progress-text");
         if (!progressText) {
             progressText = document.createElement("div");
@@ -115,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         progressText.innerHTML = `${Math.round(progress)}% ${getProgressEmoji(progress)}`;
     
-        // Se progresso for 100%, ativa a animação especial
+        // Activate special animation when reach 100%
         if (progress === 100) {
             progressBar.classList.add("full-progress");
         } else {
@@ -123,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-    // Função que retorna um emoji baseado no progresso
+    // Fucntion that returns a reaction to different progress states
     function getProgressEmoji(progress) {
         const emojiLevels = ["😴", "😐", "🙂", "😃", "😁", "🤩", "🔥", "🚀", "🏆", "🎉", "🎯"];
         return emojiLevels[Math.floor(progress / 10)];
@@ -137,6 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem(`tasks_${currentDay}`, JSON.stringify(tasks));
     }
 
-    // Exibir as tarefas do primeiro dia ao carregar
+    // Show tasks from the first day on load
     renderTasks();
 });

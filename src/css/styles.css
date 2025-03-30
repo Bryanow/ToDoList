@@ -43,7 +43,7 @@ header h1 {
 
 .progress-bar {
     height: 100%;
-    width: 0%;
+    width: 100%;
     background: repeating-linear-gradient(
         -45deg, 
         #4caf50, #249728 10px
@@ -201,6 +201,19 @@ header h1 {
 
 .complete-btn:hover {
     background: #1e7a34;
+}
+
+.complete-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.complete-btn span.material-symbols-outlined {
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Botão excluir */

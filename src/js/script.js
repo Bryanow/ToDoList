@@ -44,17 +44,16 @@ document.addEventListener("DOMContentLoaded", () => {
             if (task.completed) li.classList.add("completed");
 
             li.innerHTML = `
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=select_check_box" />
                 <span class="task-text">${task.time ? `[${task.time}] ` : ""}${task.text}</span>
                 <div class="task-buttons">
-                    <button class="complete-btn" data-index="${index}">
-                        <svg width="20" height="20" viewBox="0 0 24 24">
-                            <path d="M5 12l5 5L19 7" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
-                        </svg>
+                    <button class="complete-btn" data-index="${index}" style="background: ${task.completed ? 'gray' : 'green'};">
+                        ${task.completed 
+                            ? '<span class="material-symbols-outlined">select_check_box</span>'
+                            : '<svg width="20" height="20" viewBox="0 0 24 24"> <path d="M5 12l5 5L19 7" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/> </svg>'}
                     </button>
                     <button class="delete-btn" data-index="${index}">
-                        <svg width="20" height="20" viewBox="0 0 24 24">
-                            <path d="M6 6l12 12M6 18L18 6" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
-                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24"> <path d="M6 6l12 12M6 18L18 6" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/> </svg>
                     </button>
                 </div>
             `;

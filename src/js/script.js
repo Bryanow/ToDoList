@@ -4,20 +4,58 @@ document.addEventListener("DOMContentLoaded", () => {
     const taskTime = document.getElementById("taskTime");
     const progressBar = document.getElementById("progressBar");
     const tabButtons = document.querySelectorAll(".tab-button");
+    let selectedDate = new Date().toISOString().split("T")[0];
+    const datePicker = document.getElementById("datePicker");
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        document.querySelector(".theme-menu").classList.toggle("hidden");
+    });
 
-    let currentDay = "segunda"; // Default para o primeiro dia ativo
-
-    // Alternar abas e atualizar a lista correspondente
-    tabButtons.forEach(button => {
+    document.querySelectorAll(".theme-option").forEach(button => {
         button.addEventListener("click", () => {
-            currentDay = button.getAttribute("data-day");
-            document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
-            button.classList.add("active");
-            renderTasks(); // Atualiza a lista ao alternar entre as abas
+            document.body.className = ""; // limpa qualquer tema anterior
+            document.body.classList.add(`theme-${button.dataset.theme}`);
+            document.querySelector(".theme-menu").classList.add("hidden");
         });
     });
 
+
+    datePicker.value = selectedDate;
+    datePicker.min = selectedDate;
+
+    datePicker.addEventListener("change", (e) => {
+        selectedDate = e.target.value;
+        renderTasks(); // reexibe as tarefas do dia da semana atual para a nova data
+        tabButtons.forEach(button => button.classList.remove("disabled"));
+    });
+
+    let currentDay = "segunda"; // Aba padrão
+
+    // Alternar abas
+    tabButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            tabButtons.forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
+
+            currentDay = button.dataset.day;
+
+            // Ativa a lista correspondente
+            document.querySelectorAll(".task-list").forEach(list => list.classList.remove("active"));
+            document.querySelector(`.task-list[data-day="${currentDay}"]`).classList.add("active");
+
+            renderTasks();
+        });
+    });
+    tabButtons.forEach(button => button.classList.add("disabled"));
+
+
+    // Clique no botão ou Enter
     addTaskBtn.addEventListener("click", () => addTask());
+    taskInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") addTask();
+    });
+    taskTime.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") addTask();
+    });
 
     function addTask() {
         const taskText = taskInput.value.trim();
@@ -33,19 +71,16 @@ document.addEventListener("DOMContentLoaded", () => {
         taskTime.value = "";
     }
 
-    taskInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-            addTask();
-        }
-    });
-
-    taskTime.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-            addTask();
-        }
-    });
-
     function renderTasks() {
+        const tabButtons = document.querySelectorAll(".tab-button");
+        tabButtons.forEach(button => {
+        if (!selectedDate) {
+            button.classList.add("disabled");
+        } else {
+            button.classList.remove("disabled");
+        }
+        });
+
         const taskList = document.querySelector(`.task-list[data-day="${currentDay}"]`);
         taskList.innerHTML = "";
 
@@ -56,17 +91,16 @@ document.addEventListener("DOMContentLoaded", () => {
             if (task.completed) li.classList.add("completed");
 
             li.innerHTML = `
-                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=select_check_box" />
                 <input type="time" class="task-time-input" value="${task.time || ''}" data-index="${index}" />
                 <input type="text" class="task-text-input" value="${task.text}" data-index="${index}" />
                 <div class="task-buttons">
                     <button class="complete-btn" data-index="${index}" style="background: ${task.completed ? 'gray' : 'green'};">
                         ${task.completed 
-                            ? '<span class="material-symbols-outlined">select_check_box</span>'
-                            : '<svg width="20" height="20" viewBox="0 0 24 24"> <path d="M5 12l5 5L19 7" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/> </svg>'}
+                            ? '<span><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><title>Back</title><path d="M352,170.667H94.17l70.249-70.248a21.334,21.334,0,1,0-30.171-30.171L27.581,176.915a21.336,21.336,0,0,0,0,30.171L134.248,313.752a21.334,21.334,0,1,0,30.171-30.171L94.17,213.333H352a96,96,0,0,1,0,192H128A21.333,21.333,0,1,0,128,448H352c76.461,0,138.667-62.205,138.667-138.667S428.461,170.667,352,170.667Z"></path></svg></span>'
+                            : '<svg width="20" height="20" viewBox="0 0 24 24"><path d="M5 12l5 5L19 7" stroke="white" stroke-width="2" fill="none"/></svg>'}
                     </button>
                     <button class="delete-btn" data-index="${index}">
-                        <svg width="20" height="20" viewBox="0 0 24 24"> <path d="M6 6l12 12M6 18L18 6" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/> </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6" stroke="white" stroke-width="2" fill="none"/></svg>
                     </button>
                 </div>
             `;
@@ -92,21 +126,17 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        // Evento para editar o horário da tarefa
         document.querySelectorAll(".task-time-input").forEach(input => {
             input.addEventListener("change", (e) => {
                 const index = e.target.getAttribute("data-index");
-                updateTask(index, "time", e.target.value, true); // Reorganizar ao editar o horário
+                updateTask(index, "time", e.target.value, true);
             });
 
             input.addEventListener("keydown", (e) => {
-                if (e.key === "Enter") {
-                    e.target.blur(); // Simula perda de foco para salvar
-                }
+                if (e.key === "Enter") e.target.blur();
             });
         });
 
-        // Evento para editar o nome da tarefa
         document.querySelectorAll(".task-text-input").forEach(input => {
             input.addEventListener("blur", (e) => {
                 const index = e.target.getAttribute("data-index");
@@ -114,9 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             input.addEventListener("keydown", (e) => {
-                if (e.key === "Enter") {
-                    e.target.blur(); // Simula perda de foco para salvar
-                }
+                if (e.key === "Enter") e.target.blur();
             });
         });
     }
@@ -125,12 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const tasks = getTasksForDay();
         tasks[index][field] = value;
         saveTasksForDay(tasks);
-
-        if (reorder) {
-            renderTasks(); // Reorganiza a lista caso o horário seja alterado
-        } else {
-            renderTasks();
-        }
+        renderTasks();
     }
 
     function toggleCompleteTask(index) {
@@ -175,13 +198,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function getTasksForDay() {
-        const tasks = JSON.parse(localStorage.getItem(`tasks_${currentDay}`)) || [];
+        const key = `tasks_${selectedDate}_${currentDay}`;
+        const tasks = JSON.parse(localStorage.getItem(key)) || [];
         return tasks.sort((a, b) => (a.time || "23:59").localeCompare(b.time || "23:59"));
     }
 
+
     function saveTasksForDay(tasks) {
-        localStorage.setItem(`tasks_${currentDay}`, JSON.stringify(tasks));
+        const key = `tasks_${selectedDate}_${currentDay}`;
+        localStorage.setItem(key, JSON.stringify(tasks));
     }
 
-    renderTasks();
+    // Inicializar: clique na aba padrão
+    document.querySelector(".tab-button.active")?.click();
 });

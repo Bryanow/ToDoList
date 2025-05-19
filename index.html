@@ -10,6 +10,16 @@
     <link rel="stylesheet" href="src/css/tabs.css">
 </head>
 <body>
+    <div class="theme-selector">
+    <button id="theme-toggle">🎨 Tema</button>
+        <div class="theme-menu hidden">
+            <button class="theme-option" data-theme="default">Padrão</button>
+            <button class="theme-option" data-theme="dark">Noturno</button>
+            <button class="theme-option" data-theme="neon">Neon</button>
+            <button class="theme-option" data-theme="pastel">Pastel</button>
+            <button class="theme-option" data-theme="futuristic">Futurista</button>
+        </div>
+    </div>
     <div class="container">
         <header>
             <h1>Minha Lista de Tarefas</h1>
@@ -18,6 +28,11 @@
                 </div>
             </div>
         </header>
+
+        <div class="calendar-selector">
+            <label for="datePicker">Selecione um dia:</label>
+            <input type="date" id="datePicker" min="" />
+        </div>
 
         <div class="tabs">
             <button class="tab-button active" data-day="segunda">Segunda</button>
@@ -55,6 +70,5 @@
     </footer>
 
     <script src="src/js/script.js"></script>
-    <script src="src/js/tabs.js"></script>
 </body>
 </html>

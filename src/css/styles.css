@@ -9,6 +9,23 @@ body {
     overflow-x: hidden;
 }
 
+.tab-button.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+#daysOfWeekContainer {
+  margin-top: 10px;
+}
+
+.day-checkboxes {
+  margin-top: 5px;
+}
+
+.day-checkboxes label {
+  margin-right: 10px;
+}
+
 /* Main container */
 .container {
     max-width: 500px;
@@ -269,4 +286,303 @@ footer {
     color: white;
     position: fixed;
     bottom: 0;
+}
+
+input[type="date"] {
+    margin-top: 5px;
+    border: 2px solid #0056ff;
+    border-radius: 10px;
+    background-color: #f0f8ff;
+    color: #333;
+    font-weight: bold;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+input[type="date"]:focus {
+    border-color: #007bff;
+    background-color: #e8f0ff;
+}
+
+.theme-selector {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 999;
+}
+
+#theme-toggle {
+    padding: 6px 12px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#theme-toggle:hover {
+    background-color: #0056b3;
+}
+
+.theme-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    padding: 5px;
+}
+
+.theme-menu.hidden {
+    display: none;
+}
+
+.theme-option {
+    background: none;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    text-align: left;
+    font-weight: bold;
+    color: #333;
+    transition: background 0.2s;
+}
+
+.theme-option:hover {
+    background: #f0f0f0;
+}
+
+body.theme-default {
+    background: linear-gradient(to bottom, #007bff, #87cefa);
+    color: #000;
+}
+
+body.theme-dark {
+    background: linear-gradient(to bottom, #1a1a1a, #333);
+    color: #f5f5f5;
+}
+
+body.theme-neon {
+    background: #000;
+    color: #0ff;
+}
+
+body.theme-neon .container, 
+body.theme-neon .task-list {
+    border: 2px solid #0ff;
+    box-shadow: 0 0 10px #0ff;
+}
+
+body.theme-pastel {
+    background: linear-gradient(to bottom, #ffd1dc, #c1f0f6);
+    color: #333;
+}
+
+body.theme-futuristic {
+    background: linear-gradient(to bottom, #0f0f0f, #1f1f1f);
+    color: #0cf;
+}
+
+body.theme-default input[type="date"],
+body.theme-default .task-item,
+body.theme-default .task-text-input,
+body.theme-default .task-time-input,
+body.theme-default .complete-btn,
+body.theme-default .delete-btn {
+    background-color: #f0f8ff;
+    color: #000;
+}
+
+/* -------- Tema Escuro (Dark) -------- */
+body.theme-dark .container {
+    background-color: #2a2a2a;
+    color: #f5f5f5;
+}
+body.theme-dark .task-item {
+    background-color: #3a3a3a;
+}
+body.theme-dark .task-text-input,
+body.theme-dark .task-time-input {
+    color: #f5f5f5;
+}
+body.theme-dark .complete-btn {
+    background-color: #2e8b57;
+}
+body.theme-dark .delete-btn {
+    background-color: #8b0000;
+}
+body.theme-dark input[type="date"] {
+    background-color: #444;
+    color: #f5f5f5;
+    border-color: #888;
+}
+
+/* -------- Tema Neon -------- */
+body.theme-neon .container {
+    background-color: #000;
+    color: #0ff;
+}
+body.theme-neon .task-item {
+    background-color: #111;
+    border: 1px solid #0ff;
+}
+body.theme-neon .task-text-input,
+body.theme-neon .task-time-input {
+    color: #0ff;
+}
+body.theme-neon .complete-btn {
+    background-color: #0f0;
+    color: #000;
+}
+body.theme-neon .delete-btn {
+    background-color: #f0f;
+    color: #000;
+}
+body.theme-neon input[type="date"] {
+    background-color: #000;
+    color: #0ff;
+    border-color: #0ff;
+}
+
+/* -------- Tema Pastel -------- */
+body.theme-pastel .container {
+    background-color: #fff0f5;
+    color: #333;
+}
+body.theme-pastel .task-item {
+    background-color: #ffe4e1;
+}
+body.theme-pastel .task-text-input,
+body.theme-pastel .task-time-input {
+    color: #333;
+}
+body.theme-pastel .complete-btn {
+    background-color: #b0e0e6;
+}
+body.theme-pastel .delete-btn {
+    background-color: #ffb6c1;
+}
+body.theme-pastel input[type="date"] {
+    background-color: #fffaf0;
+    color: #333;
+    border-color: #ffb6c1;
+}
+
+/* -------- Tema Futurista -------- */
+body.theme-futuristic .container {
+    background-color: #1c1c1c;
+    color: #0cf;
+}
+body.theme-futuristic .task-item {
+    background-color: #2b2b2b;
+    border: 1px solid #0cf;
+}
+body.theme-futuristic .task-text-input,
+body.theme-futuristic .task-time-input {
+    color: #0cf;
+}
+body.theme-futuristic .complete-btn {
+    background-color: #005aff;
+}
+body.theme-futuristic .delete-btn {
+    background-color: #cf0000;
+}
+body.theme-futuristic input[type="date"] {
+    background-color: #222;
+    color: #0cf;
+    border-color: #0cf;
+}
+
+body.theme-default .tab-button {
+    background-color: #007bff;
+    color: white;
+}
+
+body.theme-dark .tab-button {
+    background-color: #444;
+    color: #f5f5f5;
+}
+
+body.theme-neon .tab-button {
+    background-color: #000;
+    color: #0ff;
+    border: 1px solid #0ff;
+}
+
+body.theme-pastel .tab-button {
+    background-color: #ffe4e1;
+    color: #333;
+}
+
+body.theme-futuristic .tab-button {
+    background-color: #1c1c1c;
+    color: #0cf;
+    border: 1px solid #0cf;
+}
+
+/* -------- Botão ativo da aba -------- */
+body.theme-default .tab-button.active {
+    background-color: #28a745;
+    color: white;
+}
+
+body.theme-dark .tab-button.active {
+    background-color: #2e8b57;
+}
+
+body.theme-neon .tab-button.active {
+    background-color: #0f0;
+    color: #000;
+}
+
+body.theme-pastel .tab-button.active {
+    background-color: #b0e0e6;
+}
+
+body.theme-futuristic .tab-button.active {
+    background-color: #005aff;
+}
+
+/* -------- Barra de progresso -------- */
+body.theme-default .progress-container {
+    background-color: #dcdcdc;
+}
+body.theme-default .progress-bar {
+    background-color: #4caf50;
+}
+
+body.theme-dark .progress-container {
+    background-color: #555;
+}
+body.theme-dark .progress-bar {
+    background-color: #2e8b57;
+}
+
+body.theme-neon .progress-container {
+    background-color: #111;
+}
+body.theme-neon .progress-bar {
+    background-color: #0f0;
+}
+
+body.theme-pastel .progress-container {
+    background-color: #f8f8f8;
+}
+body.theme-pastel .progress-bar {
+    background-color: #b0e0e6;
+}
+
+body.theme-futuristic .progress-container {
+    background-color: #2a2a2a;
+}
+body.theme-futuristic .progress-bar {
+    background-color: #0cf;
 }
